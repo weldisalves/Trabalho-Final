@@ -21,8 +21,8 @@
 #define WINDOW_WIDTH 1000
 
 // Initial Position
-#define INIT_POS_X 100
-#define INIT_POS_Y 300
+#define INIT_POS_X 900
+#define INIT_POS_Y 900
 #define Y_CORRECTION 150
 #define X_CORRECTION 7
 #define SOFTWARE_TITLE "Trabalho Final"

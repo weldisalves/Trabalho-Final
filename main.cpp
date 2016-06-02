@@ -16,9 +16,7 @@
 using namespace std;
 
 int keyStatus[256];
-float tam = 0.3;
-float tamI = 0.1;
-int iX=-666,iY=800;
+int fase = 1;
 
 Player player;
 Inimigo *inimigo = NULL;
@@ -33,18 +31,19 @@ void keyboardDown( unsigned char key, int x, int y );
 void keyboardUp(unsigned char key, int x, int y);
 void idlePlayer();
 void idleMob();
-void wall(float x, float y, float z);
 void arena();
 void playerDraw();
 void inimigoDraw();
-double inimigoOriginAngle(int x, int y);
+bool checaColisao( Quadrado *quadrado1, Quadrado *quadrado2 );
+bool colisaoComArena(std::vector<Quadrado> arena, Quadrado obj);
 
+double inimigoOriginAngle( float px, float py, float ix,float iy );
 
 void init(void){
 
     glClearColor( 1.0, 1.0, 1.0, 1.0 );
     glMatrixMode( GL_PROJECTION );
-    glOrtho( -WINDOW_WIDTH, WINDOW_WIDTH, -WINDOW_HEIGHT, WINDOW_HEIGHT, 100, -100 );
+    glOrtho( -WINDOW_WIDTH, WINDOW_WIDTH, -WINDOW_HEIGHT, WINDOW_HEIGHT, 1, -1 );
     //gluPerspective (6000, 1, 1, 100.0);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
@@ -58,16 +57,22 @@ int main(int argc, char *argv[]){
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB );
     glutInitWindowSize( WINDOW_WIDTH, WINDOW_HEIGHT );
-    glutInitWindowPosition( 200, 50 );
+    glutInitWindowPosition( 100, 50 );
     glutCreateWindow( "Trabalho Final" );
 
-    mapa.loadFile("mapa1.svg");
+    if(fase == 1){
+        mapa.loadFile("mapa1.svg");
+    }else if(fase ==2){
+        //mapa.loadFile("mapa2.svg");
+    }else if(fase == 3){
+        //mapa.loadFile("mapa3.svg");
+    }
   
     player.setX(INIT_POS_X);
     player.setY(INIT_POS_Y);
     player.setDeslocamento(0.3);
 
-    inimigo = new Inimigo(800,800,0.1,200,1000);
+    inimigo = new Inimigo(-800,-800,0.2,200,1000);
 
     // printf("\n Digite a quantidade de inimigos: ");
     // scanf("%f",&n);
@@ -86,51 +91,16 @@ int main(int argc, char *argv[]){
     return 0;
 }
 
-void wall(float x, float y,float z){
-    glPushMatrix();
-    	glTranslatef(x,y,z);
-    	glColor3f(0,0,0);
-    	glBegin(GL_POLYGON);
-        	glVertex3f(0,0,0);
-        	glVertex3f(50,0,0);
-        	glVertex3f(50,50,0);
-        	glVertex3f(0,50,0);
-    	glEnd();
-    glPopMatrix();
-
-}
-
 void arena(){
-	// float i = 0;
-	// glPushMatrix();		
-	// 	for(i = WINDOW_WIDTH-50; i > -WINDOW_HEIGHT; i-=50)wall(-WINDOW_WIDTH,i,0);
-	// 	for(i = -WINDOW_WIDTH; i < WINDOW_WIDTH; i+=50)wall(i,-WINDOW_HEIGHT,0);
-	// 	for(i = -WINDOW_WIDTH+50; i < WINDOW_HEIGHT; i+=50)wall(WINDOW_WIDTH-50,i,0);
-	// 	for(i = WINDOW_WIDTH-50;i > -WINDOW_WIDTH ; i-=50)wall(i,WINDOW_HEIGHT-50,0);
-	// glPopMatrix();
-
     mapa.draw();
-
-
 }
 
 void playerDraw(){
 	player.draw();
 }
 
-void inimigoDraw(int x,int y){
-	//inimigo->draw();
-	glPushMatrix();
-        glColor3f(1,1,0);
-		glTranslatef(x,y,0);
-        glScalef(1,1,0);
-		glBegin(GL_POLYGON);
-        	glVertex3f(0,0,0);
-			glVertex3f(50,0,0);
-			glVertex3f(50,50,0);
-			glVertex3f(0,50,0);
-		glEnd();
-	glPopMatrix();
+void inimigoDraw(){
+	inimigo->draw();
 }
 
 void draw(void){
@@ -140,7 +110,7 @@ void draw(void){
 
     arena();
     playerDraw();
-    inimigoDraw(iX,iY);
+    inimigoDraw();
 
     glutSwapBuffers();
 }
@@ -217,6 +187,9 @@ void idlePlayer(){
     timeDiference = currentTime - previousTime;
     previousTime = currentTime;
 
+    bool colisaoPlayerArena = colisaoComArena(mapa.getObjetos(),player.getQuadrado());
+        
+    if(colisaoPlayerArena == false){
     
     if(keyStatus['w'] == 1){
         player.setX(cos(player.getTheta()*M_PI/180 )*timeDiference);
@@ -235,42 +208,91 @@ void idlePlayer(){
 
     }
     if(keyStatus['e'] == 1);
+    }
 
+    //perseguiçãodo inimigo
+        float px = player.getX();
+        float py = player.getY();
+        float ix = inimigo->getX();
+        float iy = inimigo->getY();
 
+        float angulo = inimigoOriginAngle(px,py,ix,iy);
+        inimigo->setTheta(angulo);
         
-
-    //perseguição
-    if(iX > player.getX()){
-        iX -= tamI*timeDiference;
-    }else if(iX < player.getX()){
-        iX += tamI*timeDiference;
-    }
-
-    if(iY > player.getY()){
-        iY -= tamI*timeDiference;
-    }else if(iY < player.getY()){
-        iY += tamI*timeDiference;
-    }
+        if(inimigo->getX() > player.getX() -200 || inimigo->getX()< player.getX()-200){
+            inimigo->setX(cos(inimigo->getTheta()*M_PI/180 )*timeDiference);
+        }
+        if(inimigo->getY()+50 > player.getY()-200){
+            inimigo->setY(sin(inimigo->getTheta()*M_PI/180 )*timeDiference);
+        }else if(inimigo->getY()+50 < player.getY()-200){
+            inimigo->setY(sin(inimigo->getTheta()*M_PI/180 )*timeDiference);
+        }
     
     glutPostRedisplay();
+
+
+
+    printf("Player- %f    %f\n",player.getX(),player.getY() );
+
+    printf("Inimigo- %f    %f\n",inimigo->getX(),inimigo->getY() );
+
 }
 
-double inimigoOriginAngle( int x, int y ){
+double inimigoOriginAngle( float px, float py, float ix,float iy ){
+
     int xa, ya;
     int x2,y2;
-    x2 = x - WINDOW_WIDTH;
-    y2 = WINDOW_HEIGHT - y ;
-    ya = player.getY() + 40;
-    xa = player.getX();
+    x2 = px;
+    y2 = py ;
+    ya = iy;
+
+    xa = ix + 10;
 
     double oposto, adjascente;
     adjascente = x2 - xa;
     oposto = y2 - ya;
 
-    double aux =  atan(adjascente/oposto) * 180 / M_PI;
-    if(oposto < 0) aux = aux + 180;
-    aux = -aux;
+    double aux =  atan(oposto/adjascente) * 180 / M_PI;
+    if(adjascente < 0) aux = aux + 180;
+    //aux = -aux;
 
     return aux;
 }
 
+
+bool checaColisao( Quadrado quadrado1, Quadrado quadrado2 ){
+    float esquerda1, direita1, cima1, baixo1;
+    float esquerda2, direita2, cima2, baixo2;
+
+    esquerda1 = quadrado1.x;
+    direita1 = quadrado1.x + quadrado1.width;
+    cima1 = quadrado1.y;
+    baixo1 = quadrado1.y + quadrado1.height;
+    esquerda2 = quadrado2.x;
+    direita2 = quadrado2.x + quadrado2.width;
+    cima2 = quadrado2.y;
+    baixo2 = quadrado2.y + quadrado2.height;
+
+    if( esquerda1 > direita2 ) return false; //retorna 0 (não colisão)
+    if( direita1 < esquerda2 ) return false; // retorna 0 (não colisão)
+    if( cima1 > baixo2 ) return false; // retorna 0 (não colisão)
+    if( baixo1 < cima2 ) return false; // retorna 0 (não colisão)
+
+     /*do contrário retorna 1 (COLISÃO)*/
+     return false;
+} 
+
+bool colisaoComArena(std::vector<Quadrado> arena, Quadrado obj){
+    bool colisao;
+
+    for(int i = 1 ;i < arena.size();i++){
+        colisao = checaColisao(arena[i],obj);
+  //getchar();
+        if(colisao == true){
+            printf("Colidiu com a arena");
+            //return true;
+            exit(0);
+        }
+    }
+    return false;
+}

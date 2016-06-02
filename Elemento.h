@@ -4,6 +4,11 @@
 
 enum tipoDirecao  {NORTE, SUL, LESTE, OESTE};
 
+typedef struct{
+    float x,y;
+    float width,height;
+}Quadrado;
+
 class Elemento {
       protected:
         float x;
@@ -17,6 +22,7 @@ class Elemento {
         int linha;
         int coluna;
         tipoDirecao direcao;
+        Quadrado quadrado;
       public:
         bool isVisivel();
         void setVisivel(bool);
@@ -35,10 +41,10 @@ class Elemento {
         void setLargura(float);
         void setTheta(float);
         virtual void draw()=0;
-        virtual void mover(tipoDirecao direcao, float incremento);
-        
+        virtual void mover(tipoDirecao direcao, float incremento);        
         void setDirecao(tipoDirecao);
         tipoDirecao getDirecao();       
+        Quadrado getQuadrado();
                  
 };
 #endif

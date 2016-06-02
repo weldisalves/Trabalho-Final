@@ -93,3 +93,7 @@ tipoDirecao Elemento::getDirecao() {
 void Elemento::setDirecao(tipoDirecao tipo) {
     this->direcao = tipo;     
 }
+
+Quadrado Elemento::getQuadrado(){
+    return this->quadrado;
+}

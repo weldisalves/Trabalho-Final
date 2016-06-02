@@ -5,21 +5,15 @@
 #include <stdio.h>
 #include <vector>
 
-typedef struct{
-	float x,y;
-	float height,width;
-	
-}Objeto;
-
 class Mapa : public Elemento{
       public:
       	Mapa();
       	~Mapa();
         virtual void draw();
         void loadFile(char* filename);
-        std::vector<Objeto> getObjetos();   
+        std::vector<Quadrado> getObjetos();   
       private:
-      	std::vector<Objeto> objetos;
+      	std::vector<Quadrado> objetos;
                     
 };
 #endif

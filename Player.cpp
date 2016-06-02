@@ -9,11 +9,10 @@
 Player::Player(){
 	this->x=0;
 	this->y=0;
-}
-Player::Player(float x, float y){
-	this->x=x;
-	this->y=y;
-
+	quadrado.x=-30;
+	quadrado.y=-30;
+	quadrado.width = 60;
+	quadrado.height = 60;
 }
 
 Player::~Player(){
@@ -26,7 +25,20 @@ void Player::draw(){
 		glTranslatef(this->x,this->y,0);
 		glRotatef(this->theta,0,0,1);
 
-		glPushMatrix();
+		float x,x1,y,y1;
+
+		x = quadrado.x;
+      	y = quadrado.y;
+      	x1 = quadrado.width;
+      	y1 = quadrado.height;
+
+	    glPushMatrix();
+	    glBegin(GL_POLYGON);
+	        glVertex3f(x,y,0);        
+	        glVertex3f(x+x1,y,0);        
+	        glVertex3f(x+x1,y+y1,0);        
+	    	glVertex3f(x,y+y1,0);        
+	    glEnd();
 			glColor3f(1,0,0);
 			glBegin(GL_POLYGON);
 				glVertex3f(0,5,0);
@@ -46,3 +58,4 @@ void Player::draw(){
 		glPopMatrix();
 	glPopMatrix();
 }
+

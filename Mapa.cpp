@@ -32,26 +32,18 @@ void Mapa::loadFile(char* filename){
       break;
 
     if ( strcmp( lineHeader, "width" ) == 0 ){
-      Objeto aux;
+      Quadrado aux;
       fscanf(file, " ='%f'\n", &aux.width);
       fscanf(file, "height ='%f'\n", &aux.height);
       fscanf(file, "x ='%f'\n", &aux.x);
       fscanf(file, "y ='%f'\n", &aux.y);
+      aux.y -= 1050;
       objetos.push_back(aux);
-
-      // printf("Width = %f\n", aux.width );
-      // printf("Height ='%f'\n", aux.height);
-      // printf("X ='%f'\n", aux.x);
-      // printf("Y ='%f'\n", aux.y);
     }
   }
 
-  printf("FIM DO ARQUIVO!!!!\n");
-
-  fclose(file);
-
-  for(int i=0;i<objetos.size();i++){
-    printf("test\n");
+  for(int i=1;i<objetos.size();i++){
+    printf("%d\n",i);
     printf("Width = %f\n", objetos[i].width );
     printf("Height ='%f'\n", objetos[i].height);
     printf("X ='%f'\n", objetos[i].x);
@@ -59,35 +51,39 @@ void Mapa::loadFile(char* filename){
 
   }
 
+  printf("FIM DO ARQUIVO!!!!\n");
+
+  fclose(file);
+
 }
 
 void Mapa::draw(){
+
+  float x,x1,y,y1;
+
   glPushMatrix();
+    
     glColor3f(0,0,0);
 
-    // glBegin(GL_POLYGON);
-    //   glVertex3f(objetos[0].x -WINDOW_WIDTH ,objetos[0].y,0);        
-    //   glVertex3f(objetos[0].x+objetos[0].width -WINDOW_WIDTH,objetos[0].y,0);
-    //   glVertex3f(objetos[0].x+objetos[0].width -WINDOW_WIDTH,objetos[0].y+objetos[0].height,0);
-    //   glVertex3f(objetos[0].x -WINDOW_WIDTH,objetos[0].y+objetos[0].height,0);
-    // glEnd();
+    for(int i = 1;i<objetos.size();i++){
 
-    for(int i = 0;i<objetos.size();i++){
+      x = objetos[i].x;
+      y = objetos[i].y;
+      x1 = objetos[i].width;
+      y1 = objetos[i].height;
+
       glBegin(GL_POLYGON);
-      for(int j=i+0;j<i+4;j++){
-        glVertex3f(objetos[j].x,objetos[j].y,0);        
-        glVertex3f(objetos[j].x+objetos[i].width,objetos[j].y,0);
-        glVertex3f(objetos[j].x+objetos[i].width,objetos[j].y-objetos[j].height,0);
-        glVertex3f(objetos[j].x,objetos[j].y-objetos[j].height,0);
-      }
+        glVertex3f(x,y,0);        
+        glVertex3f(x+x1,y,0);        
+        glVertex3f(x+x1,y+y1,0);        
+        glVertex3f(x,y+y1,0);        
       glEnd();
     }
 
   glPopMatrix();
 
-  
 }
 
-std::vector<Objeto> Mapa::getObjetos(){
+std::vector<Quadrado> Mapa::getObjetos(){
   return objetos;
 }

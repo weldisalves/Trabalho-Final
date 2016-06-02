@@ -11,6 +11,7 @@ class Inimigo : public Elemento{
             void idle(float,float,float);
             void setHp(float);
             void setDefesa(float);
+            void setTheta(float);
       private:
              float hp;
              float ataque;

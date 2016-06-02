@@ -6,7 +6,6 @@
 class Player : public Elemento{
       public:
       	Player();
-      	Player(float x, float y);
       	~Player();
             virtual void draw();
             float getHp();
@@ -14,6 +13,5 @@ class Player : public Elemento{
             float hp;
             float ataque;
             float defesa;
-
 };
 #endif
