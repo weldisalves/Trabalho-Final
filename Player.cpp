@@ -1,10 +1,12 @@
 #include <iostream>
 #include <math.h>
+#include <vector>
 #include "globals.h"
 #include "Player.h"
 #include "Elemento.h"
 #include "ReadOBJ.h"
 #include "Poder.h"
+#include "Bala.h"
 
 Player::Player(){
 	this->x=0;
@@ -59,3 +61,14 @@ void Player::draw(){
 	glPopMatrix();
 }
 
+std::vector<Bala> Player::getBalas(){
+	return balas;
+}
+
+void Player::carregaMunicao(){
+	
+	for(int i = 0;i< 10000 ;i++){
+		Bala aux;
+		balas.push_back(aux);
+	}
+}

@@ -2,6 +2,9 @@
 #include <stdio.h>
 #include <math.h>
 #include <time.h>
+#include <iostream>
+#include <fstream>
+#include <string.h>
 #include "globals.h"
 #include "Player.h"
 #include "Inimigo.h"
@@ -9,9 +12,8 @@
 #include "Poder.h"
 #include "Wall.h"
 #include "Mapa.h"
-#include <iostream>
-#include <fstream>
-#include <string.h>
+#include "Bala.h"
+
 
 using namespace std;
 
@@ -24,6 +26,10 @@ Inimigo *inimigo = NULL;
 Mapa mapa;
 
 float n;
+
+float bx=0,by=0,theta=0;
+
+int tiro = 0;
 
 void draw(void);
 void inicializaKeyStatus();
@@ -38,6 +44,10 @@ bool checaColisao( Quadrado *quadrado1, Quadrado *quadrado2 );
 bool colisaoComArena(std::vector<Quadrado> arena, Quadrado obj);
 
 double inimigoOriginAngle( float px, float py, float ix,float iy );
+
+float distancia(){
+	return sqrt(pow(player.getX()-inimigo->getX(),2)+pow(player.getY()-inimigo->getY(),2));
+}
 
 void init(void){
 
@@ -71,6 +81,9 @@ int main(int argc, char *argv[]){
     player.setX(INIT_POS_X);
     player.setY(INIT_POS_Y);
     player.setDeslocamento(0.3);
+    player.carregaMunicao();
+
+
 
     inimigo = new Inimigo(-800,-800,0.2,200,1000);
 
@@ -97,6 +110,8 @@ void arena(){
 
 void playerDraw(){
 	player.draw();
+	player.getBalas()[tiro-1].draw();
+
 }
 
 void inimigoDraw(){
@@ -171,6 +186,13 @@ void keyboardDown( unsigned char key, int x, int y ){
         case 'D':
             keyStatus[(int)('d')] = 1;
             break;
+        case 'q':
+        case 'Q':
+        	keyStatus[(int)('q')] = 1;
+        	player.getBalas()[tiro].setX(player.getX());
+        	player.getBalas()[tiro].setY(player.getY());
+        	player.getBalas()[tiro].setTheta(player.getTheta());
+        	break;
         default:
             break;
     }
@@ -205,7 +227,10 @@ void idlePlayer(){
     if(keyStatus['a'] == 1)player.setTheta(player.getDeslocamento()*timeDiference);
 
     if(keyStatus['q'] == 1){
-
+    	player.getBalas()[tiro].setX(cos(player.getTheta()*M_PI/180 )*timeDiference*0.5);
+        player.getBalas()[tiro].setY(sin(player.getTheta()*M_PI/180 )*timeDiference*0.5);
+        
+	    tiro++;
     }
     if(keyStatus['e'] == 1);
     }
@@ -218,24 +243,19 @@ void idlePlayer(){
 
         float angulo = inimigoOriginAngle(px,py,ix,iy);
         inimigo->setTheta(angulo);
-        
-        if(inimigo->getX() > player.getX() -200 || inimigo->getX()< player.getX()-200){
-            inimigo->setX(cos(inimigo->getTheta()*M_PI/180 )*timeDiference);
+
+        float dist = distancia();
+    if(dist < 800 && dist > 200){
+        if(inimigo->getX() > player.getX() || inimigo->getX()< player.getX()){
+            inimigo->setX(cos(inimigo->getTheta()*M_PI/180 ));
         }
-        if(inimigo->getY()+50 > player.getY()-200){
-            inimigo->setY(sin(inimigo->getTheta()*M_PI/180 )*timeDiference);
-        }else if(inimigo->getY()+50 < player.getY()-200){
-            inimigo->setY(sin(inimigo->getTheta()*M_PI/180 )*timeDiference);
+        if(inimigo->getY() > player.getY() || inimigo->getY()< player.getY()){
+            inimigo->setY(sin(inimigo->getTheta()*M_PI/180 ));
         }
+    }
     
     glutPostRedisplay();
-
-
-
-    printf("Player- %f    %f\n",player.getX(),player.getY() );
-
-    printf("Inimigo- %f    %f\n",inimigo->getX(),inimigo->getY() );
-
+    //printf("distancia - %f\n",dist );
 }
 
 double inimigoOriginAngle( float px, float py, float ix,float iy ){
@@ -253,6 +273,7 @@ double inimigoOriginAngle( float px, float py, float ix,float iy ){
     oposto = y2 - ya;
 
     double aux =  atan(oposto/adjascente) * 180 / M_PI;
+
     if(adjascente < 0) aux = aux + 180;
     //aux = -aux;
 

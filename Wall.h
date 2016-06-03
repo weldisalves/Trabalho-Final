@@ -1,4 +1,4 @@
-#ifndef AWALL_H
+#ifndef WALL_H
 #define WALL_H
 #include "Elemento.h"
 #include <stdlib.h>

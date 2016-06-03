@@ -58,7 +58,7 @@ void Inimigo::draw(){
 			glColor3f(1,1,0);
 			glBegin(GL_POLYGON);
 				for(int i=0;i<100;i++){
-					glVertex3f(30*cos(2*M_PI*i/100),30*sin(2*M_PI*i/100),1);
+					glVertex3f(60*cos(2*M_PI*i/100),60*sin(2*M_PI*i/100),1);
 				}
 			glEnd();
 		glPopMatrix();

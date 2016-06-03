@@ -42,14 +42,14 @@ void Mapa::loadFile(char* filename){
     }
   }
 
-  for(int i=1;i<objetos.size();i++){
-    printf("%d\n",i);
-    printf("Width = %f\n", objetos[i].width );
-    printf("Height ='%f'\n", objetos[i].height);
-    printf("X ='%f'\n", objetos[i].x);
-    printf("Y ='%f'\n", objetos[i].y);
+  // for(int i=1;i<objetos.size();i++){
+  //   printf("%d\n",i);
+  //   printf("Width = %f\n", objetos[i].width );
+  //   printf("Height ='%f'\n", objetos[i].height);
+  //   printf("X ='%f'\n", objetos[i].x);
+  //   printf("Y ='%f'\n", objetos[i].y);
 
-  }
+  // }
 
   printf("FIM DO ARQUIVO!!!!\n");
 

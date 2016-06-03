@@ -4,7 +4,7 @@ COMPILE=$(OPT) -cpp
 LINK=$(OPT) -o
 APP=main
 
-SRC=main.cpp Inimigo.cpp Elemento.cpp Player.cpp ReadOBJ.cpp Arena.cpp Wall.cpp Poder.cpp Mapa.cpp
+SRC=main.cpp Inimigo.cpp Elemento.cpp Player.cpp ReadOBJ.cpp Arena.cpp Wall.cpp Poder.cpp Mapa.cpp Bala.cpp
 
 all: run
 	
