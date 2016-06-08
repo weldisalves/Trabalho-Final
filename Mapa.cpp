@@ -5,6 +5,9 @@
 #include <vector>
 #include "Mapa.h"
 #include "globals.h"
+#include "Retangulo.h"
+#include "tiny/tinystr.h"
+#include "tiny/tinyxml.h"
 
 using namespace std;
 
@@ -17,73 +20,59 @@ Mapa::~Mapa(){
 }
 
 void Mapa::loadFile(char* filename){
-  FILE* file = fopen(filename,"r");
+  TiXmlDocument doc;
+    bool loaded = doc.LoadFile(filename);
+    if (loaded){
+        TiXmlElement* inputFiles = doc.FirstChildElement("svg")->FirstChildElement("g");
+        TiXmlElement* rect = inputFiles->FirstChildElement("rect");
+        Retangulo* aux;
+        while(rect!=NULL){
+            
+            string w = rect->Attribute("width");
+            string h = rect->Attribute("height");
+            string x = rect->Attribute("x");
+            string y = rect->Attribute("y");
+            float width=atoi(w.c_str());
+            float height=atoi(h.c_str());
+            float x =(float)atof(x.c_str());
+            float y =(float)atof(y.c_str());
+            
+            for(int i=x;i<x+largura;i++) //criando matriz de colisões do mapa
+                for(int j=y;j<y+altura;j++)
+                    matrizColisao[i][j]=1;
 
-  if(!file){
-    printf("ERRO AO ABRIR AQUIVO %s\n",filename );
-    exit(0);
+            aux = new Retangulo(x, y, height, width, 0.0,0.0,0.0);
+            retangulos.push_back(aux);
+            rect = rect->NextSiblingElement("rect");
+        }
+      }else{
+        printf("ERRO AO ABRIR AQUIVO %s\n",filename );
+      }
+
+  for(int i=0;i<retangulos.size();i++){
+    printf("%d\n",i);
+    printf("Width = %f\n", retangulos[i]->getWidth() );
+    printf("Height ='%f'\n", retangulos[i]->getHeight());
+    printf("X ='%f'\n", retangulos[i]->getX());
+    printf("Y ='%f'\n", retangulos[i]->getY());
+
   }
-
-  while( 1 ){
-
-    char lineHeader[128];
-    int res = fscanf(file, "%s", lineHeader);
-    if (res == EOF)
-      break;
-
-    if ( strcmp( lineHeader, "width" ) == 0 ){
-      Quadrado aux;
-      fscanf(file, " ='%f'\n", &aux.width);
-      fscanf(file, "height ='%f'\n", &aux.height);
-      fscanf(file, "x ='%f'\n", &aux.x);
-      fscanf(file, "y ='%f'\n", &aux.y);
-      aux.y -= 1050;
-      objetos.push_back(aux);
-    }
-  }
-
-  // for(int i=1;i<objetos.size();i++){
-  //   printf("%d\n",i);
-  //   printf("Width = %f\n", objetos[i].width );
-  //   printf("Height ='%f'\n", objetos[i].height);
-  //   printf("X ='%f'\n", objetos[i].x);
-  //   printf("Y ='%f'\n", objetos[i].y);
-
-  // }
 
   printf("FIM DO ARQUIVO!!!!\n");
-
-  fclose(file);
-
 }
 
 void Mapa::draw(){
 
-  float x,x1,y,y1;
-
   glPushMatrix();
-    
-    glColor3f(0,0,0);
 
-    for(int i = 1;i<objetos.size();i++){
-
-      x = objetos[i].x;
-      y = objetos[i].y;
-      x1 = objetos[i].width;
-      y1 = objetos[i].height;
-
-      glBegin(GL_POLYGON);
-        glVertex3f(x,y,0);        
-        glVertex3f(x+x1,y,0);        
-        glVertex3f(x+x1,y+y1,0);        
-        glVertex3f(x,y+y1,0);        
-      glEnd();
+    for(int i = 0;i<retangulos.size();i++){
+      retangulos[i]->draw();      
     }
 
   glPopMatrix();
 
 }
 
-std::vector<Quadrado> Mapa::getObjetos(){
-  return objetos;
+std::vector<Retangulo*> Mapa::getRetangulos(){
+  return retangulos;
 }

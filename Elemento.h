@@ -4,47 +4,41 @@
 
 enum tipoDirecao  {NORTE, SUL, LESTE, OESTE};
 
-typedef struct{
-    float x,y;
-    float width,height;
-}Quadrado;
-
 class Elemento {
       protected:
         float x;
         float y;
         float z;
-        float largura;
-        float altura;
         float theta;
         float deslocamento; 
+        float width;
+        float height;
         bool visivel;
         int linha;
         int coluna;
         tipoDirecao direcao;
-        Quadrado quadrado;
+        
       public:
         bool isVisivel();
         void setVisivel(bool);
         float getX();
         float getY();
         float getZ();
-        float getAltura();
-        float getLargura();
         float getTheta();
         float getDeslocamento();
+        float getHeight();
+        float getWidth();
         void setX(float);
         void setY(float);
         void setZ(float);
         void setDeslocamento(float);
-        void setAltura(float);
-        void setLargura(float);
         void setTheta(float);
+        void setHeight(float);
+        void setWidth(float);
         virtual void draw()=0;
         virtual void mover(tipoDirecao direcao, float incremento);        
         void setDirecao(tipoDirecao);
-        tipoDirecao getDirecao();       
-        Quadrado getQuadrado();
+        tipoDirecao getDirecao();           
                  
 };
 #endif

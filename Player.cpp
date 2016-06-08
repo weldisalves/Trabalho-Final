@@ -6,13 +6,13 @@
 #include "Elemento.h"
 #include "ReadOBJ.h"
 #include "Poder.h"
-#include "Bala.h"
+#include "Arma.h"
 
 Player::Player(){
 	this->x=0;
 	this->y=0;
-	quadrado.x=-30;
-	quadrado.y=-30;
+	quadrado.x= -30;
+	quadrado.y= -30;
 	quadrado.width = 60;
 	quadrado.height = 60;
 }
@@ -59,16 +59,4 @@ void Player::draw(){
 			glEnd();
 		glPopMatrix();
 	glPopMatrix();
-}
-
-std::vector<Bala> Player::getBalas(){
-	return balas;
-}
-
-void Player::carregaMunicao(){
-	
-	for(int i = 0;i< 10000 ;i++){
-		Bala aux;
-		balas.push_back(aux);
-	}
 }

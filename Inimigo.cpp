@@ -10,6 +10,10 @@ Inimigo::Inimigo(){
 	this->ataque=0;
 	this->defesa =0;
 	this->deslocamento =0.1;
+	quadrado.x=-30;
+	quadrado.y=-30;
+	quadrado.width = 60;
+	quadrado.height = 60;
 }
 
 Inimigo::Inimigo(float x, float y,float deslocamento,float ataque,float hp){
@@ -20,6 +24,10 @@ Inimigo::Inimigo(float x, float y,float deslocamento,float ataque,float hp){
 	this->defesa = 100;
 	this->deslocamento = deslocamento;
 	this->theta = 0;
+	quadrado.x=-30;
+	quadrado.y=-30;
+	quadrado.width = 60;
+	quadrado.height = 60;
 }
 
 Inimigo::~Inimigo(){
@@ -39,6 +47,7 @@ void Inimigo::draw(){
       	y1 = quadrado.height;
 
 	    glPushMatrix();
+	    glColor3f(0,0,0);
 	    glBegin(GL_POLYGON);
 	        glVertex3f(x,y,0);        
 	        glVertex3f(x+x1,y,0);        
@@ -58,16 +67,10 @@ void Inimigo::draw(){
 			glColor3f(1,1,0);
 			glBegin(GL_POLYGON);
 				for(int i=0;i<100;i++){
-					glVertex3f(60*cos(2*M_PI*i/100),60*sin(2*M_PI*i/100),1);
+					glVertex3f(30*cos(2*M_PI*i/100),30*sin(2*M_PI*i/100),1);
 				}
 			glEnd();
 		glPopMatrix();
-	glPopMatrix();
-
-
-	
-
-		
 	glPopMatrix();
 }
  

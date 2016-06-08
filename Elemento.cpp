@@ -15,12 +15,12 @@ float Elemento::getZ() {
     return this->z;
 }
 
-float Elemento::getAltura() {
-    return this->altura;   
+float Elemento::getHeight() {
+    return this->height;   
 }
 
-float Elemento::getLargura() {
-    return this->largura;   
+float Elemento::getWidth() {
+    return this->width;   
 }
 
 float Elemento::getDeslocamento(){
@@ -51,12 +51,12 @@ void Elemento::setDeslocamento(float valor){
     this->deslocamento=valor;
 }
 
-void Elemento::setAltura(float valor) {
-     this->altura = valor;     
+void Elemento::setHeight(float valor) {
+     this->height = valor;     
 }
 
-void Elemento::setLargura(float valor) {
-     this->largura = valor;     
+void Elemento::setWidth(float valor) {
+     this->width = valor;     
 }
 
 void Elemento::setVisivel(bool valor) {

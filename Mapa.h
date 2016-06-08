@@ -1,9 +1,11 @@
 #ifndef Mapa_H
 #define Mapa_H
-#include "Elemento.h"
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <vector>
+#include "Elemento.h"
+#include "Retangulo.h"
 
 class Mapa : public Elemento{
       public:
@@ -11,9 +13,9 @@ class Mapa : public Elemento{
       	~Mapa();
         virtual void draw();
         void loadFile(char* filename);
-        std::vector<Quadrado> getObjetos();   
+        std::vector<Retangulo*> getRetangulos();   
       private:
-      	std::vector<Quadrado> objetos;
+      	std::vector<Retangulo*> retangulos;
                     
 };
 #endif
