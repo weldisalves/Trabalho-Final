@@ -3,8 +3,9 @@ OPT=-lGL -lGLU -lglut -lm
 COMPILE=$(OPT) -cpp
 LINK=$(OPT) -o
 APP=main
+TINY=tinystr.cpp tinyxml.cpp tinyxmlerror.cpp tinyxmlparser.cpp
 
-SRC=main.cpp Inimigo.cpp Elemento.cpp Player.cpp ReadOBJ.cpp Mapa.cpp Retangulo.cpp tiny/tinystr.cpp tiny/tinyxml.cpp tiny/tinyxmlerror.cpp tiny/tinyxmlparser.cpp
+SRC=main.cpp Inimigo.cpp Elemento.cpp Player.cpp ReadOBJ.cpp Mapa.cpp Retangulo.cpp Rectangle.cpp $(TINY)
 
 all: run
 	

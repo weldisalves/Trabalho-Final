@@ -5,8 +5,7 @@
 #include <GL/glut.h>
 #include <string>
 
-Retangulo::Retangulo()
-{
+Retangulo::Retangulo(){
 }
 
 Retangulo::Retangulo(float x, float y, float height, float width,float R,float G,float B){

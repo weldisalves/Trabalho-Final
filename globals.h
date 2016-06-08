@@ -17,11 +17,11 @@
 #include "Elemento.h"
 
 // Desired dimensions
-#define WINDOW_HEIGHT 1000
-#define WINDOW_WIDTH 1000
+#define WINDOW_HEIGHT 800
+#define WINDOW_WIDTH 800
 
 // Initial Position
-#define INIT_POS_X 700
+#define INIT_POS_X 750
 #define INIT_POS_Y 900
 #define Y_CORRECTION 150
 #define X_CORRECTION 7

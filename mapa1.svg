@@ -7,21 +7,14 @@
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
-   width="2000"
-   height="2000"
+   width="800"
+   height="800"
    id="svg2"
    version="1.1"
    inkscape:version="0.48.5 r10040"
    sodipodi:docname="mapa1.svg">
-  <script
-     xlink:href=""
-     id="script2995" />
-  <script
-     xlink:href=""
-     id="script2993" />
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -31,19 +24,25 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.24748737"
-     inkscape:cx="1423.8105"
-     inkscape:cy="1455.1054"
+     inkscape:zoom="0.98994949"
+     inkscape:cx="489.07568"
+     inkscape:cy="188.60657"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
-     showgrid="false"
+     showgrid="true"
      inkscape:window-width="1366"
      inkscape:window-height="710"
      inkscape:window-x="0"
      inkscape:window-y="0"
-     inkscape:window-maximized="1"
-     showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:window-maximized="1">
+    <inkscape:grid
+       type="xygrid"
+       id="grid3012"
+       empspacing="5"
+       visible="true"
+       enabled="true"
+       snapvisiblegridlinesonly="true" />
+  </sodipodi:namedview>
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -52,7 +51,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title />
+        <dc:title></dc:title>
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -60,106 +59,126 @@
      inkscape:label="Camada 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(0,947.6378)">
-    <rect
-       style="fill:#000000"
-       id="rect3016"
-       width="205.71428"
-       height="142.85715"
-       x="261.17502"
-       y="-675.4234" />
+     transform="translate(0,-252.36218)">
     <rect
        style="fill:#000000"
        id="rect3018"
-       width="148.57143"
-       height="240"
-       x="786.88928"
-       y="-726.85199" />
+       width="120"
+       height="60"
+       x="620"
+       y="60"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3020"
-       width="217.14285"
-       height="354.28571"
-       x="1255.4607"
-       y="-658.28052" />
+       width="220"
+       height="40"
+       x="260"
+       y="100"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3022"
-       width="154.28572"
-       height="371.42856"
-       x="1626.8893"
-       y="-321.1377" />
+       width="180"
+       height="80"
+       x="480"
+       y="220"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3024"
-       width="680"
-       height="188.57143"
-       x="358.31784"
-       y="-298.28058" />
+       width="120"
+       height="40"
+       x="160"
+       y="280"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3026"
-       width="377.14285"
-       height="85.714287"
-       x="1026.8893"
-       y="90.290878" />
+       width="60"
+       height="120"
+       x="360"
+       y="320"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3028"
-       width="342.85715"
-       height="114.28571"
-       x="444.03214"
-       y="256.00516" />
+       width="60"
+       height="20"
+       x="100"
+       y="80"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3030"
-       width="462.85715"
-       height="154.28572"
-       x="1312.6036"
-       y="404.57657" />
+       width="40"
+       height="60"
+       x="620"
+       y="420"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3032"
-       width="102.85714"
-       height="314.28571"
-       x="1026.8893"
-       y="433.14801" />
+       width="40"
+       height="80"
+       x="680"
+       y="640"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
        id="rect3034"
-       width="200"
-       height="257.14285"
-       x="575.46075"
-       y="553.14801" />
+       width="60"
+       height="60"
+       x="520"
+       y="620"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
-       id="rect2998"
-       width="50"
-       height="2000"
-       x="0"
-       y="-947.63788" />
+       id="rect3036"
+       width="100"
+       height="60"
+       x="300"
+       y="600"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
-       id="rect2998-5"
-       width="50"
-       height="2000"
-       x="1950"
-       y="-947.63782" />
+       id="rect3038"
+       width="120"
+       height="40"
+       x="100"
+       y="620"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
-       id="rect2998-5-1"
-       width="50"
-       height="1900"
-       x="897.63782"
-       y="50"
-       transform="matrix(0,-1,1,0,0,0)" />
+       id="rect3054"
+       width="740"
+       height="20"
+       x="30"
+       y="10"
+       transform="translate(0,252.36218)" />
     <rect
        style="fill:#000000"
-       id="rect2998-5-1-8"
-       width="50"
-       height="1900"
-       x="-1052.3622"
-       y="50"
-       transform="matrix(0,-1,1,0,0,0)" />
+       id="rect3056"
+       width="740"
+       height="20"
+       x="30"
+       y="770"
+       transform="translate(0,252.36218)" />
+    <rect
+       style="fill:#000000"
+       id="rect3058"
+       width="20"
+       height="740"
+       x="770"
+       y="30"
+       transform="translate(0,252.36218)" />
+    <rect
+       style="fill:#000000"
+       id="rect3060"
+       width="20"
+       height="740"
+       x="10"
+       y="30"
+       transform="translate(0,252.36218)" />
   </g>
 </svg>

@@ -10,10 +10,10 @@ Inimigo::Inimigo(){
 	this->ataque=0;
 	this->defesa =0;
 	this->deslocamento =0.1;
-	quadrado.x=-30;
-	quadrado.y=-30;
-	quadrado.width = 60;
-	quadrado.height = 60;
+	// retangulo.setX(-30 + getX());
+	// retangulo.setY(-30 + getY());
+	// retangulo.setWidth(60);
+	// retangulo.setHeight(60);
 }
 
 Inimigo::Inimigo(float x, float y,float deslocamento,float ataque,float hp){
@@ -24,10 +24,10 @@ Inimigo::Inimigo(float x, float y,float deslocamento,float ataque,float hp){
 	this->defesa = 100;
 	this->deslocamento = deslocamento;
 	this->theta = 0;
-	quadrado.x=-30;
-	quadrado.y=-30;
-	quadrado.width = 60;
-	quadrado.height = 60;
+	// retangulo.setX(-30);
+	// retangulo.setY(-30);
+	// retangulo.setWidth(60);
+	// retangulo.setHeight(60);
 }
 
 Inimigo::~Inimigo(){
@@ -39,35 +39,34 @@ void Inimigo::draw(){
 		glTranslatef(this->x,this->y,0);
 		glRotatef(this->theta,0,0,1);
 
-		float x,x1,y,y1;
+		float x,w,y,h;
 
-		x = quadrado.x;
-      	y = quadrado.y;
-      	x1 = quadrado.width;
-      	y1 = quadrado.height;
+		x = retangulo.getX();
+      	y = retangulo.getY();
+      	w = retangulo.getWidth();
+      	h = retangulo.getHeight();
 
 	    glPushMatrix();
-	    glColor3f(0,0,0);
 	    glBegin(GL_POLYGON);
 	        glVertex3f(x,y,0);        
-	        glVertex3f(x+x1,y,0);        
-	        glVertex3f(x+x1,y+y1,0);        
-	    	glVertex3f(x,y+y1,0);        
+	        glVertex3f(x+w,y,0);        
+	        glVertex3f(x+w,y+h,0);        
+	    	glVertex3f(x,y+h,0);        
 	    glEnd();
 			glColor3f(1,0,0);
 			glBegin(GL_POLYGON);
-				glVertex3f(0,5,0);
-				glVertex3f(0,-5,0);
-				glVertex3f(50,-5,0);
-				glVertex3f(50,5,0);
+				glVertex3f(0,2,0);
+				glVertex3f(0,-2,0);
+				glVertex3f(20,-2,0);
+				glVertex3f(20,2,0);
 			glEnd();
 		glPopMatrix();
 			
 		glPushMatrix();
-			glColor3f(1,1,0);
+			glColor3f(0,1,0);
 			glBegin(GL_POLYGON);
 				for(int i=0;i<100;i++){
-					glVertex3f(30*cos(2*M_PI*i/100),30*sin(2*M_PI*i/100),1);
+					glVertex3f(10*cos(2*M_PI*i/100),10*sin(2*M_PI*i/100),1);
 				}
 			glEnd();
 		glPopMatrix();

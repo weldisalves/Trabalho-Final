@@ -6,8 +6,8 @@
 #include "Mapa.h"
 #include "globals.h"
 #include "Retangulo.h"
-#include "tiny/tinystr.h"
-#include "tiny/tinyxml.h"
+#include "tinyxml.h"
+#include "Rectangle.h"
 
 using namespace std;
 
@@ -20,41 +20,41 @@ Mapa::~Mapa(){
 }
 
 void Mapa::loadFile(char* filename){
+
   TiXmlDocument doc;
     bool loaded = doc.LoadFile(filename);
-    if (loaded){
+    if (loaded)
+    {
         TiXmlElement* inputFiles = doc.FirstChildElement("svg")->FirstChildElement("g");
         TiXmlElement* rect = inputFiles->FirstChildElement("rect");
-        Retangulo* aux;
+        Rectangle* aux;
         while(rect!=NULL){
             
             string w = rect->Attribute("width");
             string h = rect->Attribute("height");
             string x = rect->Attribute("x");
             string y = rect->Attribute("y");
-            float width=atoi(w.c_str());
-            float height=atoi(h.c_str());
-            float x =(float)atof(x.c_str());
-            float y =(float)atof(y.c_str());
+            int largura=atoi(w.c_str());
+            int altura=atoi(h.c_str());
+            int xlido =(int)atof(x.c_str());
+            int ylido =(int)atof(y.c_str());
             
-            for(int i=x;i<x+largura;i++) //criando matriz de colisões do mapa
-                for(int j=y;j<y+altura;j++)
+            for(int i=xlido;i<xlido+largura;i++) //criando matriz de colisões do mapa
+                for(int j=ylido;j<ylido+altura;j++)
                     matrizColisao[i][j]=1;
 
-            aux = new Retangulo(x, y, height, width, 0.0,0.0,0.0);
+            aux = new Rectangle(xlido, ylido, altura, largura, 0,0,0);
             retangulos.push_back(aux);
             rect = rect->NextSiblingElement("rect");
         }
-      }else{
-        printf("ERRO AO ABRIR AQUIVO %s\n",filename );
       }
-
-  for(int i=0;i<retangulos.size();i++){
+  
+  for(float i=0;i<retangulos.size();i++){
     printf("%d\n",i);
-    printf("Width = %f\n", retangulos[i]->getWidth() );
-    printf("Height ='%f'\n", retangulos[i]->getHeight());
-    printf("X ='%f'\n", retangulos[i]->getX());
-    printf("Y ='%f'\n", retangulos[i]->getY());
+    printf("Width = %f\n", retangulos[i]->Width);
+    printf("Height ='%f'\n", retangulos[i]->Height);
+    printf("X ='%f'\n", retangulos[i]->x);
+    printf("Y ='%f'\n", retangulos[i]->y);
 
   }
 
@@ -65,14 +65,14 @@ void Mapa::draw(){
 
   glPushMatrix();
 
-    for(int i = 0;i<retangulos.size();i++){
-      retangulos[i]->draw();      
+    for(float i = 0;i<retangulos.size();i++){
+      retangulos[i]->Draw();      
     }
 
   glPopMatrix();
 
 }
 
-std::vector<Retangulo*> Mapa::getRetangulos(){
+std::vector<Rectangle*> Mapa::getRetangulos(){
   return retangulos;
 }

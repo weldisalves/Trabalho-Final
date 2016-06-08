@@ -12,10 +12,13 @@ class Inimigo : public Elemento{
             void setHp(float);
             void setDefesa(float);
             void setTheta(float);
+            Retangulo getRetangulo();
+            
       private:
              float hp;
              float ataque;
              float defesa;
-             float deslocamento;        
+             Retangulo retangulo;
+                   
 };
 #endif

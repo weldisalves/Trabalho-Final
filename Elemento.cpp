@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdio.h>
 #include "Elemento.h"
+#include "Retangulo.h"
 
 float Elemento::getX() {
     return this->x;   
@@ -92,8 +93,4 @@ tipoDirecao Elemento::getDirecao() {
 
 void Elemento::setDirecao(tipoDirecao tipo) {
     this->direcao = tipo;     
-}
-
-Quadrado Elemento::getQuadrado(){
-    return this->quadrado;
 }

@@ -6,6 +6,7 @@
 #include <vector>
 #include "Elemento.h"
 #include "Retangulo.h"
+#include "Rectangle.h"
 
 class Mapa : public Elemento{
       public:
@@ -13,9 +14,10 @@ class Mapa : public Elemento{
       	~Mapa();
         virtual void draw();
         void loadFile(char* filename);
-        std::vector<Retangulo*> getRetangulos();   
+        std::vector<Rectangle*> getRetangulos();
+        int matrizColisao [3000][3000];   
       private:
-      	std::vector<Retangulo*> retangulos;
+      	std::vector<Rectangle*> retangulos;      	
                     
 };
 #endif

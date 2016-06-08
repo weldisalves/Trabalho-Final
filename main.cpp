@@ -9,22 +9,22 @@
 #include "Player.h"
 #include "Inimigo.h"
 #include "Elemento.h"
-#include "Poder.h"
-#include "Wall.h"
 #include "Mapa.h"
 
 using namespace std;
 
 int keyStatus[256];
 int fase = 1;
+int matrizDeColisao[3000][3000];
 
 Elemento *player = new Player();
-Inimigo *inimigo = NULL;
+
+std::vector<Inimigo> inimigos;
 
 Mapa mapa;
 Mapa moldura;
 
-float n;
+float n= 10;
 
 void draw(void);
 void inicializaKeyStatus();
@@ -41,12 +41,30 @@ float distancia(float x1, float y1, float x2, float y2){
 	return sqrt(pow(x2-x1,2)+pow(y2-y1,2));
 }
 
+void criarInimigos(int n){
+	srand (time(NULL));
+	for(int i = 0;i < n;i++){
+
+		Inimigo aux;
+
+		float posX = rand()%600;
+		aux.setX(posX);
+		float posY = rand()%600;
+		aux.setY(posY);
+		
+		inimigos.push_back(aux);
+	}
+}
+
+void motion(int x, int y){
+	printf("%d  -  %d\n",x,y );
+}
+
 void init(void){
 
     glClearColor( 1.0, 1.0, 1.0, 1.0 );
     glMatrixMode( GL_PROJECTION );
-    glOrtho( -WINDOW_WIDTH, WINDOW_WIDTH, -WINDOW_HEIGHT, WINDOW_HEIGHT, 1, -1 );
-    //gluPerspective (6000, 1, 1, 100.0);
+    glOrtho( 0,WINDOW_WIDTH, WINDOW_HEIGHT, 0, 1, -1 );
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
     inicializaKeyStatus();   
@@ -55,14 +73,11 @@ void init(void){
 }    
 
 int main(int argc, char *argv[]){
-
     glutInit( &argc, argv );
     glutInitDisplayMode( GLUT_DOUBLE | GLUT_RGB );
     glutInitWindowSize( WINDOW_WIDTH, WINDOW_HEIGHT );
     glutInitWindowPosition( 100, 50 );
     glutCreateWindow( "Trabalho Final" );
-
-    //moldura.loadFile("moldura.svg");
 
     if(fase == 1){
         mapa.loadFile("mapa1.svg");
@@ -74,15 +89,20 @@ int main(int argc, char *argv[]){
   
     player->setX(INIT_POS_X);
     player->setY(INIT_POS_Y-200);
-    player->setDeslocamento(0.3);
+    player->setDeslocamento(0.1);
 
-    inimigo = new Inimigo(-800,-800,0.2,200,1000);
+    printf("Digite a quantidade de inimigos: \n");
+    fflush(stdin);
+    //scanf("%f",&n);
+    criarInimigos(n);
+
+
 
     // printf("\n Digite a quantidade de inimigos: ");
     // scanf("%f",&n);
 
 
-    srand (time(NULL));
+    
 
     init();
     
@@ -90,6 +110,7 @@ int main(int argc, char *argv[]){
     glutKeyboardFunc(keyboardDown);
     glutKeyboardUpFunc(keyboardUp);
     glutIdleFunc(idlePlayer);
+    glutPassiveMotionFunc(motion);
   
     glutMainLoop();
     return 0;
@@ -105,7 +126,10 @@ void playerDraw(){
 }
 
 void inimigoDraw(){
-	inimigo->draw();
+	for(int i = 0;i < n;i++){
+		inimigos[i].draw();
+	}
+
 }
 
 void draw(void){
@@ -208,38 +232,42 @@ void idlePlayer(){
         player->setY(-sin(player->getTheta()*M_PI/180 )*timeDiference);
     }
 
-    if(keyStatus['d'] == 1)player->setTheta(player->getDeslocamento()*timeDiference);
-    if(keyStatus['a'] == 1)player->setTheta(-player->getDeslocamento()*timeDiference);
+    if(keyStatus['d'] == 1)player->setTheta(player->getDeslocamento()*timeDiference*2);
+    if(keyStatus['a'] == 1)player->setTheta(-player->getDeslocamento()*timeDiference*2);
 
     if(keyStatus['q'] == 1);
     if(keyStatus['e'] == 1);
     
     //perseguiçãodo inimigo
-        float px = player->getX();
-        float py = player->getY();
-        float ix = inimigo->getX();
-        float iy = inimigo->getY();
+    float px = player->getX();
+    float py = player->getY();
 
-        float angulo = inimigoOriginAngle(px,py,ix,iy);
-        inimigo->setTheta(angulo);
+    for(int i = 0;i<n ; i++){
+    	float ix = inimigos[i].getX();
+        float iy = inimigos[i].getY();
+    	float angulo = inimigoOriginAngle(px,py,ix,iy);
+        inimigos[i].setTheta(angulo);
 
-    float dist = distancia(player->getX(),player->getY(),inimigo->getX(),inimigo->getY());
+        int x = (int)ix;
+        int y = (int)iy;
 
+    	float dist = distancia(player->getX(),player->getY(),inimigos[i].getX(),inimigos[i].getY());
 
-    if(dist > 200){
-        if(inimigo->getX() > player->getX() || inimigo->getX()< player->getX()){
-            inimigo->setX(cos(inimigo->getTheta()*M_PI/180 )*3.5);
-        }
-        if(inimigo->getY() > player->getY() || inimigo->getY()< player->getY()){
-            inimigo->setY(sin(inimigo->getTheta()*M_PI/180 )*3.5);
-        }
-    }else{
-    	inimigo->setX(-cos(inimigo->getTheta()*M_PI/180)*2);
-        inimigo->setY(-sin(inimigo->getTheta()*M_PI/180)*2);
+    	if(dist < 500 && dist > 70){
+        	if(inimigos[i].getX() > player->getX() || inimigos[i].getX()< player->getX()){
+            	inimigos[i].setX(cos(inimigos[i].getTheta()*M_PI/180 ));
+        	}
+        	if(inimigos[i].getY() > player->getY() || inimigos[i].getY()< player->getY()){
+            	inimigos[i].setY(sin(inimigos[i].getTheta()*M_PI/180 ));
+        	}
+    	}else if(dist < 70){
+    		inimigos[i].setX(-cos(inimigos[i].getTheta()*M_PI/180));
+        	inimigos[i].setY(-sin(inimigos[i].getTheta()*M_PI/180));
+    	}
     }
     
     glutPostRedisplay();
-    //printf("distancia - %f\n",dist );
+
 }
 
 double inimigoOriginAngle( float px, float py, float ix,float iy ){
